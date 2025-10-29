@@ -1,0 +1,164 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Test Backend
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+      
+      - name: Install backend dependencies
+        run: |
+          cd server
+          npm ci
+      
+      - name: Run backend tests
+        run: |
+          cd server
+          npm test
+        env:
+          NODE_ENV: test
+          MONGO_URI: mongodb://root:password@localhost:27017/aquabeacon_test?authSource=admin
+          JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
+          JWT_REFRESH_SECRET: test-refresh-secret-key-for-ci-testing-only
+      
+      - name: Run backend linting
+        run: |
+          cd server
+          npm run lint
+      
+      - name: Security audit
+        run: |
+          cd server
+          npm audit --audit-level high
+
+  # Test Frontend
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+      
+      - name: Install frontend dependencies
+        run: |
+          cd client
+          npm ci
+      
+      - name: Run frontend tests
+        run: |
+          cd client
+          npm test
+        env:
+          VITE_API_URL: http://localhost:5000/api
+      
+      - name: Run frontend linting
+        run: |
+          cd client
+          npm run lint
+      
+      - name: Build frontend
+        run: |
+          cd client
+          npm run build
+        env:
+          VITE_API_URL: https://aquabeacon-api.render.com/api
+      
+      - name: Security audit
+        run: |
+          cd client
+          npm audit --audit-level high
+
+  # Security Checks
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Code Quality
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd server && npm ci
+          cd ../client && npm ci
+      
+      - name: Check for .env files in commits
+        run: |
+          if git ls-files | grep -E '\.(env|environment)$'; then
+            echo "❌ Error: .env files found in repository!"
+            echo "These files contain sensitive information and should not be committed."
+            exit 1
+          else
+            echo "✅ No .env files found in repository"
+          fi
+      
+      - name: Check for sensitive data patterns
+        run: |
+          # Check for potential API keys, passwords, etc.
+          if grep -r -E "(api[_-]?key|password|secret|token)" --include="*.js" --include="*.jsx" --include="*.ts" --include="*.tsx" . | grep -v node_modules | grep -v ".git" | grep -E "=\s*['\"][^'\"]{10,}['\"]"; then
+            echo "❌ Warning: Potential sensitive data found in code"
+            echo "Please review and move to environment variables"
+          else
+            echo "✅ No obvious sensitive data patterns found"
+          fi

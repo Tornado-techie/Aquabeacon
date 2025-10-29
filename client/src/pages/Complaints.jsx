@@ -20,6 +20,7 @@ const Complaints = () => {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedAsAnonymous, setSubmittedAsAnonymous] = useState(false);
   const [photoPreviews, setPhotoPreviews] = useState([]);
 
   const handleChange = (e) => {
@@ -121,77 +122,122 @@ const Complaints = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  // Fixed handleSubmit function in Complaints.jsx
 
-    if (!formData.isAnonymous) {
-      if (!formData.consumerName) {
-        toast.error('Please enter your full name.');
-        setLoading(false);
-        return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  // Validation checks (keep existing validation)
+  if (!formData.isAnonymous) {
+    if (!formData.consumerName) {
+      toast.error('Please enter your full name.');
+      setLoading(false);
+      return;
+    }
+    if (!formData.consumerPhone) {
+      toast.error('Please enter your phone number.');
+      setLoading(false);
+      return;
+    }
+  }
+
+  if (formData.photos.length === 0) {
+    toast.error('Please upload at least one photo of the water quality issue.');
+    setLoading(false);
+    return;
+  }
+
+  if (!formData.location) {
+    toast.error('Please provide the location of the incident.');
+    setLoading(false);
+    return;
+  }
+
+  if (!formData.description || formData.description.trim().length < 10) {
+    toast.error('Please provide a description of at least 10 characters.');
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const submitData = new FormData();
+    
+    // Append form fields
+    Object.keys(formData).forEach(key => {
+      if (key === 'photos') {
+        // Append each photo file
+        formData.photos.forEach(photo => {
+          submitData.append('photos', photo);
+        });
+      } else {
+        submitData.append(key, formData[key]);
       }
-      if (!formData.consumerPhone) {
-        toast.error('Please enter your phone number.');
-        setLoading(false);
-        return;
-      }
+    });
+
+    console.log('FormData contents:');
+    for (let [key, value] of submitData.entries()) {
+      console.log(`${key}:`, value);
     }
 
-    if (formData.photos.length === 0) {
-      toast.error('Please upload at least one photo.');
-      setLoading(false);
-      return;
-    }
+    // FIXED: Remove Content-Type header to let browser set it automatically
+    const response = await api.post('/complaints', submitData, {
+      headers: {
+        // DON'T set Content-Type - let browser set it with boundary
+      },
+      timeout: 60000 // Increase timeout for file uploads
+    });
 
-    if (!formData.location) {
-      toast.error('Please provide the location of the incident.');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.description || formData.description.trim().length < 10) {
-      toast.error('Please provide a description of at least 10 characters.');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const submitData = new FormData();
-      Object.keys(formData).forEach(key => {
-        if (key === 'photos') {
-          formData.photos.forEach(photo => {
-            submitData.append('photos', photo);
-          });
-        } else {
-          submitData.append(key, formData[key]);
-        }
-      });
-
-      await api.post('/complaints', submitData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
+    if (response.data.success) {
       toast.success('Complaint submitted successfully!');
+      setSubmittedAsAnonymous(formData.isAnonymous);
       setSubmitted(true);
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to submit complaint');
-    } finally {
-      setLoading(false);
+    } else {
+      toast.error(response.data.message || 'Failed to submit complaint');
     }
-  };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center py-12 px-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+  } catch (error) {
+    console.error('Submission error:', error);
+    
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+      console.error('Error status:', error.response.status);
+      
+      // Handle specific validation errors
+      if (error.response.status === 400 && error.response.data.errors) {
+        error.response.data.errors.forEach(err => {
+          toast.error(`${err.field}: ${err.message}`);
+        });
+      } else {
+        toast.error(error.response.data.message || 'Failed to submit complaint');
+      }
+    } else {
+      toast.error('Network error. Please try again.');
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+if (submitted) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center py-12 px-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <FiCheckCircle className="w-8 h-8 text-green-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Complaint Submitted</h2>
           <p className="text-gray-600 mb-6">
-            Thank you for reporting this issue. We take all complaints seriously and will investigate promptly.
-            You'll receive updates via email or SMS.
+            {submittedAsAnonymous ? (
+              <>
+                Thank you for reporting this issue anonymously. We take all complaints seriously and will investigate promptly.
+                You can check our updates on our website or contact us for general updates.
+              </>
+            ) : (
+              <>
+                Thank you for reporting this issue. We take all complaints seriously and will investigate promptly.
+                You'll receive updates via email or SMS.
+              </>
+            )}
           </p>
           <div className="space-y-3">
             <Link
@@ -201,7 +247,10 @@ const Complaints = () => {
               Back to Home
             </Link>
             <button
-              onClick={() => setSubmitted(false)}
+              onClick={() => {
+                setSubmitted(false);
+                setSubmittedAsAnonymous(false);
+              }}
               className="block w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
             >
               Submit Another Complaint
@@ -414,7 +463,7 @@ const Complaints = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Photos * (Required for complaint processing)
+                    Photos * (Required - Visual evidence of the water quality issue)
                   </label>
                   
                   {/* Photo Upload Area */}

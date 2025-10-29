@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import PlantSetup from './pages/PlantSetup';
 import Complaints from './pages/Complaints';
+import TrackComplaint from './pages/TrackComplaint';
 import Inspections from './pages/Inspections';
 import LabBooking from './pages/LabBooking';
 import AdminPanel from './pages/AdminPanel';
@@ -191,7 +192,10 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/pricing-comparison" element={<PricingComparison />} />
+          <Route path="/complaints" element={<Complaints />} />
           <Route path="/complaints/submit" element={<Complaints />} />
+          <Route path="/track-complaint" element={<TrackComplaint />} />
+          <Route path="/water-safety" element={<Navigate to="/knowledge-hub?section=water-safety" replace />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Info Pages (Public) */}
@@ -248,14 +252,6 @@ function App() {
             element={
               <ProtectedRoute roles={['inspector', 'admin']}>
                 <Inspections />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/complaints"
-            element={
-              <ProtectedRoute roles={['inspector', 'admin', 'owner']}>
-                <Complaints />
               </ProtectedRoute>
             }
           />

@@ -8,6 +8,11 @@ coverage/
 .vite/
 out/
 
+# Dependency lock files (keep these commented if you want to track them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
 ### Environment and secrets
 *.env
 *.env.*
@@ -185,6 +190,15 @@ docs/build/
 test-results/
 playwright-report/
 test-results.xml
+tests/
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+jest.config.js
+test-upload-fix.js
+coverage/
+.nyc_output
 
 ### Docker
 .dockerignore

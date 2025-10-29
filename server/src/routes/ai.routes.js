@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const aiController = require('../controllers/ai.controller');
-const { protect, optionalAuth } = require('../middleware/auth');
+const { authenticate, optionalAuthenticate } = require('../middleware/auth.middleware');
 const rateLimit = require('express-rate-limit');
 
 // Rate limiter for AI queries
@@ -12,15 +12,15 @@ const aiLimiter = rateLimit({
 });
 
 // Public routes (with rate limiting)
-router.post('/query', optionalAuth, aiLimiter, aiController.queryAI);
-router.get('/suggestions', optionalAuth, aiController.getSuggestions);
+router.post('/query', optionalAuthenticate, aiLimiter, aiController.queryAI);
+router.get('/suggestions', optionalAuthenticate, aiController.getSuggestions);
 
 // Protected routes
-router.get('/history/:sessionId', optionalAuth, aiController.getChatHistory);
-router.get('/sessions', protect, aiController.getUserSessions);
-router.delete('/sessions/:sessionId', protect, aiController.deleteChatSession);
+router.get('/history/:sessionId', optionalAuthenticate, aiController.getChatHistory);
+router.get('/sessions', authenticate, aiController.getUserSessions);
+router.delete('/sessions/:sessionId', authenticate, aiController.deleteChatSession);
 
 // Admin routes
-router.get('/stats', protect, aiController.getAIStats);
+router.get('/stats', authenticate, aiController.getAIStats);
 
 module.exports = router;

@@ -379,3 +379,60 @@ exports.getNearbyReports = async (req, res) => {
     });
   }
 };
+
+/**
+ * @desc    Update report status (admin/inspector only)
+ * @route   PATCH /api/reports/:id/status
+ * @access  Private (admin/inspector)
+ */
+exports.updateReportStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, response, inspectorNotes } = req.body;
+
+    const validStatuses = ['pending', 'investigating', 'resolved', 'rejected'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid status. Must be one of: ' + validStatuses.join(', ')
+      });
+    }
+
+    const report = await WaterIssue.findById(id);
+    if (!report) {
+      return res.status(404).json({
+        success: false,
+        message: 'Report not found'
+      });
+    }
+
+    // Update report
+    report.status = status;
+    report.lastUpdated = new Date();
+    report.handledBy = req.user._id;
+
+    if (response) report.response = response;
+    if (inspectorNotes) report.inspectorNotes = inspectorNotes;
+
+    await report.save();
+
+    await report.populate('reportedBy', 'fullName email');
+    await report.populate('handledBy', 'fullName email');
+
+    logger.info(`Report ${id} status updated to ${status} by user ${req.user._id}`);
+
+    res.json({
+      success: true,
+      message: 'Report status updated successfully',
+      data: report
+    });
+
+  } catch (error) {
+    logger.error('Update report status error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update report status',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};

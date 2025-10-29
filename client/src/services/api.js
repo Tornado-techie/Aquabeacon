@@ -75,9 +75,8 @@ export const plantsAPI = {
 
 export const complaintsAPI = {
   submit: (data) => api.post('/complaints', data),
-  uploadPhotos: (formData) => api.post('/complaints/upload-photos', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
+  uploadPhotos: (formData) => api.post('/complaints/upload-photos', formData),
+  // Note: Removed Content-Type header - browser sets it automatically with boundary for FormData
   getAll: (params) => api.get('/complaints', { params }),
   getById: (id) => api.get(`/complaints/${id}`),
   update: (id, data) => api.put(`/complaints/${id}`, data),

@@ -13,11 +13,13 @@ const authRoutes = require('./src/routes/auth.routes');
 const userRoutes = require('./src/routes/users.routes');
 const plantRoutes = require('./src/routes/plants.routes');
 const permitRoutes = require('./src/routes/permits.routes');
-const { complaintsRouter, aiRouter } = require('./src/routes/complaints.routes');
+const { complaintsRouter } = require('./src/routes/complaints.routes');
+const aiRouter = require('./src/routes/ai.routes');
 const labSampleRoutes = require('./src/routes/labSamples.routes');
 const standardRoutes = require('./src/routes/standards.routes');
 const trainingRoutes = require('./src/routes/training.routes');
 const dashboardRoutes = require('./src/routes/dashboard.routes');
+const reportsRoutes = require('./src/routes/reports.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -62,6 +64,10 @@ app.use('/api/standards', standardRoutes);
 app.use('/api/training', trainingRoutes);
 app.use('/api/ai', aiRouter);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/reports', reportsRoutes);
+
+// Serve uploaded files (for development when S3 is not configured)
+app.use('/uploads', express.static('uploads'));
 
 app.use((req, res) => {
   res.status(404).json({

@@ -9,7 +9,9 @@ const complaintSchema = new mongoose.Schema({
   },
   reporterName: {
     type: String,
-    required: true
+    required: function() {
+      return !this.isAnonymous;
+    }
   },
   reporterEmail: {
     type: String,
@@ -17,8 +19,9 @@ const complaintSchema = new mongoose.Schema({
   },
   reporterPhone: {
     type: String,
-    required: true,
-    // Removed match regex to allow more flexible phone number format
+    required: function() {
+      return !this.isAnonymous;
+    }
   },
   isAnonymous: {
     type: Boolean,

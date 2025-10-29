@@ -56,6 +56,38 @@ exports.authenticate = async (req, res, next) => {
 };
 
 /**
+ * Optional authentication - sets user if token is valid, but doesn't require it
+ */
+exports.optionalAuthenticate = async (req, res, next) => {
+  try {
+    let token;
+
+    // Get token from Authorization header
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (token) {
+      try {
+        // Verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // Get user from token
+        req.user = await User.findById(decoded.id).select('-password');
+      } catch (error) {
+        // Token is invalid but we don't throw error for optional auth
+        logger.info('Optional auth - invalid token:', error.message);
+      }
+    }
+
+    next();
+  } catch (error) {
+    logger.error('Optional authentication error:', error);
+    next();
+  }
+};
+
+/**
  * Check if user has specific role
  */
 exports.authorize = (...roles) => {

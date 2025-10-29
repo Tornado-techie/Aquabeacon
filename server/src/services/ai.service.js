@@ -1,9 +1,15 @@
 const OpenAI = require('openai');
 const AIChatHistory = require('../models/AIChatHistory');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+// Initialize OpenAI client only if API key is available
+let openai = null;
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
+} else {
+  console.warn('Warning: OPENAI_API_KEY not set. AI features will be disabled.');
+}
 
 // System prompt for water business context
 const SYSTEM_PROMPT = `You are an expert AI assistant for AquaBeacon, a water business management platform in Kenya. Your role is to help entrepreneurs, inspectors, and consumers with water purification and bottling businesses.
@@ -49,6 +55,11 @@ class AIService {
   // Generate AI response
   async generateResponse(userMessage, context = {}) {
     try {
+      // Check if OpenAI is available
+      if (!openai) {
+        throw new Error('AI service is not available. OPENAI_API_KEY is not configured.');
+      }
+
       const { userId, userRole, sessionId, chatHistory = [] } = context;
 
       // Build conversation history

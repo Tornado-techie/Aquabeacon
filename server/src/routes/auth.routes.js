@@ -4,7 +4,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { authenticate } = require('../middleware/auth.middleware');
-const { validate } = require('../middleware/validator.middleware');
+const { handleValidationErrors } = require('../middleware/validator.middleware');
 const authController = require('../controllers/auth.controller');
 
 const router = express.Router();
@@ -89,12 +89,12 @@ const passwordChangeValidation = [
 ];
 
 // Routes
-router.post('/register', registerValidation, validate, authController.register);
-router.post('/login', loginValidation, validate, authController.login);
+router.post('/register', registerValidation, handleValidationErrors, authController.register);
+router.post('/login', loginValidation, handleValidationErrors, authController.login);
 router.post('/refresh', authController.refresh);
 router.post('/logout', authenticate, authController.logout);
 router.get('/me', authenticate, authController.getCurrentUser);
-router.put('/profile', authenticate, profileUpdateValidation, validate, authController.updateProfile);
-router.put('/change-password', authenticate, passwordChangeValidation, validate, authController.changePassword);
+router.put('/profile', authenticate, profileUpdateValidation, handleValidationErrors, authController.updateProfile);
+router.put('/change-password', authenticate, passwordChangeValidation, handleValidationErrors, authController.changePassword);
 
 module.exports = router;

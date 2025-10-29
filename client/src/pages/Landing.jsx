@@ -408,11 +408,25 @@ const Landing = () => {
                 </li>
               </ul>
               <Link
-                to="/complaints/submit"
-                className="block text-center bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl ring-2 ring-transparent hover:ring-purple-200"
+                to="/complaints"
+                className="block text-center bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl ring-2 ring-transparent hover:ring-purple-200 mb-3"
               >
                 Report Issue Now
               </Link>
+              <div className="flex space-x-2">
+                <Link
+                  to="/track-complaint"
+                  className="flex-1 text-center bg-purple-100 text-purple-700 px-3 py-2 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
+                >
+                  Track Complaint
+                </Link>
+                <Link
+                  to="/knowledge-hub?section=water-safety"
+                  className="flex-1 text-center bg-purple-100 text-purple-700 px-3 py-2 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
+                >
+                  Learn Safety
+                </Link>
+              </div>
             </div>
           </div>
         </div>

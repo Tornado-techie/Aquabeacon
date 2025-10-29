@@ -221,8 +221,8 @@ const SubmitReport = () => {
       const token = localStorage.getItem('token');
       const response = await axios.post(`${API_URL}/reports`, submitData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
+          // Note: Don't set Content-Type for FormData - browser sets it automatically with boundary
         }
       });
 

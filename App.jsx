@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './hooks/useAuth';
-import Header from './components/Header';
+import { AuthProvider, useAuth } from './client/src/context/AuthContext';
+import Header from './client/src/components/Header';
 import Landing from './pages/Landing';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';

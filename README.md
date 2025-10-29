@@ -82,8 +82,6 @@ AquaBeacon is a comprehensive full-stack MERN application designed for entrepren
 
 ## 🏗️ Project Structure & Architecture
 
-## 🏗️ Project Structure & Architecture
-
 ### System Architecture
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐

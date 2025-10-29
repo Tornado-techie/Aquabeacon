@@ -258,6 +258,8 @@ cd aquabeacon
 
 ### 2. Setup Environment Variables
 
+⚠️ **SECURITY WARNING**: Never commit actual credentials to version control!
+
 ```bash
 # Server environment
 cp server/.env.example server/.env
@@ -267,6 +269,11 @@ cp client/.env.example client/.env
 ```
 
 Edit the `.env` files with your configuration. For local development with Docker, the default values should work.
+
+🔒 **Important**: Replace all placeholder values with your actual credentials:
+- MongoDB Atlas connection string
+- JWT secrets (must be at least 32 characters)
+- API keys for external services
 
 ### 3. Start with Docker Compose (Recommended)
 
@@ -670,7 +677,7 @@ vercel --prod
 **Environment Variables for Vercel:**
 ```
 VITE_API_URL=https://aquabeacon-api.render.com
-VITE_GOOGLE_MAPS_KEY=your_google_maps_key
+VITE_GOOGLE_MAPS_KEY=AIzaSyB-example-key-replace-with-real-key
 VITE_ENVIRONMENT=production
 ```
 
@@ -692,16 +699,16 @@ VITE_ENVIRONMENT=production
 **Environment Variables for Render:**
 ```
 NODE_ENV=production
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/aquabeacon
-JWT_SECRET=your_super_secret_jwt_key
-JWT_REFRESH_SECRET=your_refresh_secret
-SENDGRID_API_KEY=your_sendgrid_key
-TWILIO_ACCOUNT_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_twilio_token
-OPENAI_API_KEY=your_openai_key
-AWS_ACCESS_KEY_ID=your_aws_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret
-AWS_BUCKET_NAME=aquabeacon-uploads
+MONGO_URI=mongodb+srv://username:password@your-cluster.xxxxx.mongodb.net/your-database-name
+JWT_SECRET=your_super_secret_jwt_key_min_32_characters_long
+JWT_REFRESH_SECRET=your_refresh_secret_key_min_32_characters_long
+SENDGRID_API_KEY=SG.your_sendgrid_api_key_here
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=your_twilio_auth_token_here
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AWS_ACCESS_KEY_ID=AKIA2EXAMPLE3EXAMPLE
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AWS_BUCKET_NAME=aquabeacon-uploads-production
 ```
 
 ### Alternative Backend Deployment (Heroku)

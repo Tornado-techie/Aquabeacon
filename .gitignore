@@ -27,7 +27,6 @@ config/keys.js
 config/prod.js
 secrets.json
 credentials.json
-**/config/database.js
 **/config/keys.json
 
 ### Specific sensitive files for this project

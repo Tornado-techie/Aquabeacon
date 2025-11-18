@@ -55,15 +55,18 @@ const corsOptions = {
     // Define allowed origins
     const allowedOrigins = [
       'https://tornado-techie.github.io',
+      'https://aquabeacon-client.vercel.app',
       'https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app',
       'http://localhost:5173', // Vite dev server default port
       'http://localhost:5174', // Vite dev server alternate port
       'http://localhost:3000' // React dev server
     ];
     
-    // Add production frontend URL if it exists
+    // Add production frontend URL if it exists (remove trailing slash)
     if (process.env.FRONTEND_URL) {
-      allowedOrigins.push(process.env.FRONTEND_URL);
+      const cleanUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+      allowedOrigins.push(cleanUrl);
+      allowedOrigins.push(process.env.FRONTEND_URL); // Also add original with slash just in case
     }
     
     // Allow all Vercel preview deployments (*.vercel.app)

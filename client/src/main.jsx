@@ -3,10 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 import App from './App.jsx'
-import { initializeSentry } from './config/sentry.js'
-
-// Initialize Sentry for error tracking
-initializeSentry();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

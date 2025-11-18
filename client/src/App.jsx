@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AIProvider } from './context/AIContext';
-import { SocketProvider } from './context/SocketContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AIChatWidget from './components/ai/AIChatWidget';
 
@@ -163,8 +162,7 @@ function App() {
   return (
     <AuthProvider>
       <AIProvider>
-        <SocketProvider>
-          <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50">
         <Toaster 
           position="top-right"
           toastOptions={{
@@ -276,7 +274,6 @@ function App() {
           {/* AI Chat Widget */}
           <AIChat />
         </div>
-        </SocketProvider>
       </AIProvider>
     </AuthProvider>
   );

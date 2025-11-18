@@ -89,8 +89,11 @@ const AIChatWidget = () => {
         setMessages([WELCOME_MESSAGE]);
       }
     } catch (error) {
-      console.error('Failed to load chat history:', error);
-      setError('Failed to load chat history');
+      // Silently fail and use welcome message - this is expected for new sessions
+      // Only log if it's not a 404 (session not found)
+      if (error.response?.status !== 404) {
+        console.warn('Could not load chat history, starting fresh session');
+      }
       // Fallback to welcome message
       setMessages([WELCOME_MESSAGE]);
     }

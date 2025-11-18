@@ -3,14 +3,16 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   FiUsers, FiHome, FiAlertCircle, FiFileText, 
   FiTrendingUp, FiCheckCircle, FiXCircle, FiActivity,
-  FiDatabase, FiServer, FiMonitor, FiBarChart2, FiPieChart
+  FiDatabase, FiServer, FiMonitor, FiBarChart2, FiPieChart, FiLogOut
 } from 'react-icons/fi';
 import AquaBeaconLogo from '../components/AquaBeaconLogo';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('overview');
   const [stats, setStats] = useState({
@@ -193,12 +195,25 @@ const AdminPanel = () => {
               <AquaBeaconLogo size="md" />
               <span className="text-xl font-bold text-gray-900">Admin</span>
             </div>
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 font-medium"
-            >
-              ← Back to Dashboard
-            </button>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="text-gray-600 hover:text-gray-900 font-medium"
+              >
+                ← Back to Dashboard
+              </button>
+              <button
+                onClick={() => {
+                  logout();
+                  toast.success('Logged out successfully');
+                  navigate('/signin');
+                }}
+                className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg font-medium transition-colors"
+              >
+                <FiLogOut className="w-4 h-4" />
+                <span>Logout</span>
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -212,14 +227,25 @@ const AdminPanel = () => {
           </div>
           <div className="flex space-x-3">
             <button
-              onClick={() => {
-                fetchData();
-                fetchAdvancedAnalytics();
+              onClick={async () => {
+                setLoading(true);
+                toast.loading('Refreshing data...', { id: 'refresh' });
+                try {
+                  await Promise.all([
+                    fetchData(),
+                    fetchAdvancedAnalytics()
+                  ]);
+                  toast.success('Data refreshed successfully!', { id: 'refresh' });
+                } catch (error) {
+                  toast.error('Failed to refresh data', { id: 'refresh' });
+                } finally {
+                  setLoading(false);
+                }
               }}
-              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 flex items-center"
+              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 flex items-center disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               disabled={loading}
             >
-              <FiActivity className="w-4 h-4 mr-2" />
+              <FiActivity className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
               {loading ? 'Refreshing...' : 'Refresh Data'}
             </button>
           </div>

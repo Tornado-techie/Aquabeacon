@@ -1026,7 +1026,7 @@ The seeded database includes:
 
 ### Frontend Deployment (Vercel)
 
-**🌐 Live URL:** [https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app](https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app)
+**🌐 Live URL:** [https://aquabeacon-client.vercel.app](https://aquabeacon-client.vercel.app)
 
 ```bash
 # Build for production

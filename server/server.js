@@ -56,7 +56,6 @@ const corsOptions = {
     const allowedOrigins = [
       'https://tornado-techie.github.io',
       'https://aquabeacon-client.vercel.app',
-      'https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app',
       'http://localhost:5173', // Vite dev server default port
       'http://localhost:5174', // Vite dev server alternate port
       'http://localhost:3000' // React dev server

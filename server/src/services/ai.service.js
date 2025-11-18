@@ -102,7 +102,16 @@ class AIService {
     }
 
     const normalized = query.toLowerCase();
-    return WATER_KEYWORDS.some((keyword) => normalized.includes(keyword));
+    const isRelated = WATER_KEYWORDS.some((keyword) => normalized.includes(keyword));
+    
+    // If strict filtering is disabled, allow all queries
+    if (process.env.AI_STRICT_FILTERING === 'false') {
+      console.log('AI strict filtering disabled, allowing query');
+      return true;
+    }
+    
+    console.log(`Query "${query.substring(0, 50)}..." is water-related: ${isRelated}`);
+    return isRelated;
   }
 
   isConfigured() {

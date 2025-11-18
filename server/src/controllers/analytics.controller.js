@@ -12,11 +12,11 @@ const logger = require('../utils/logger');
  */
 exports.getAIAnalytics = async (req, res) => {
   try {
-    // Check if user is admin
-    if (req.user.role !== 'admin') {
+    // Check if user is admin or inspector
+    if (req.user.role !== 'admin' && req.user.role !== 'inspector') {
       return res.status(403).json({
         success: false,
-        message: 'Access denied. Admin role required.'
+        message: 'Access denied. Admin or Inspector role required.'
       });
     }
 
@@ -120,10 +120,10 @@ exports.getAIAnalytics = async (req, res) => {
  */
 exports.getSystemAnalytics = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'admin' && req.user.role !== 'inspector') {
       return res.status(403).json({
         success: false,
-        message: 'Access denied. Admin role required.'
+        message: 'Access denied. Admin or Inspector role required.'
       });
     }
 

@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const aiService = require('../services/ai.service');
+const { authenticate, authorize } = require('../middleware/auth.middleware');
 
 // Rate limiting middleware
 const rateLimit = require('express-rate-limit');
@@ -226,16 +227,8 @@ router.post('/debug', async (req, res) => {
 });
 
 // AI Analytics endpoint for admin dashboard
-router.get('/analytics', async (req, res) => {
+router.get('/analytics', authenticate, authorize('admin', 'inspector'), async (req, res) => {
   try {
-    // Check if user is authenticated and is admin
-    if (!req.user || req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied. Admin role required.'
-      });
-    }
-
     const analyticsController = require('../controllers/analytics.controller');
     return analyticsController.getAIAnalytics(req, res);
     

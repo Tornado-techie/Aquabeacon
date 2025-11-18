@@ -12,7 +12,7 @@
 
 ## 🚀 Live Demo
 
-**🌐 Frontend:** [https://aquabeacon-client.vercel.app/](https://aquabeacon-client.vercel.app/) 
+**🌐 Frontend:** [https://aquabeacon-client.vercel.app](https://aquabeacon-client.vercel.app) 
 
 
 **🔗 Backend:** [https://aquabeacon-backend.onrender.com](https://aquabeacon-backend.onrender.com)

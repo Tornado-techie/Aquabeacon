@@ -18,7 +18,7 @@ const complaintRoutes = require('./routes/complaints');
 const permitRoutes = require('./routes/permits');
 const paymentRoutes = require('./routes/payments');
 const articleRoutes = require('./routes/articles');
-const aiRoutes = require('./routes/ai');
+const aiRoutes = require('./src/routes/ai.routes');
 const uploadRoutes = require('./routes/upload');
 const labRoutes = require('./routes/labs');
 

@@ -56,6 +56,7 @@ exports.register = async (req, res) => {
       const validAdminCode = process.env.ADMIN_REGISTRATION_CODE;
       
       if (!validAdminCode) {
+        logger.error('ADMIN_REGISTRATION_CODE environment variable is not set');
         return res.status(500).json({
           success: false,
           message: 'Admin registration is not configured on this server'
@@ -69,8 +70,16 @@ exports.register = async (req, res) => {
         });
       }
 
-      if (adminCode !== validAdminCode) {
+      // Trim both codes to handle whitespace issues
+      const trimmedAdminCode = adminCode.trim();
+      const trimmedValidCode = validAdminCode.trim();
+
+      if (trimmedAdminCode !== trimmedValidCode) {
         logger.warn(`Invalid admin code attempt for email: ${email}`);
+        // Add debug info in development
+        if (process.env.NODE_ENV === 'development') {
+          logger.debug(`Received code length: ${trimmedAdminCode.length}, Expected code length: ${trimmedValidCode.length}`);
+        }
         return res.status(403).json({
           success: false,
           message: 'Invalid admin authorization code'

@@ -1,0 +1,25 @@
+KEBS COMPLIANCE CERTIFICATE
+============================
+
+Certificate Number: KEBS-WQ-2025-0156
+Business: AquaPure Water Solutions Ltd
+Standard: KS EAS 153 (Drinking water — Specification)
+
+CERTIFICATION DETAILS:
+Issue Date: 2025-02-20
+Valid Until: 2026-02-20
+Product: Packaged Drinking Water (500ml, 1L, 5L)
+
+TESTED PARAMETERS:
+✓ pH Level: 7.2 (Range: 6.5-8.5) - COMPLIANT
+✓ Turbidity: 1.8 NTU (Max: 5 NTU) - COMPLIANT  
+✓ Total Coliform: 0 cfu/100ml - COMPLIANT
+✓ E. coli: 0 cfu/100ml - COMPLIANT
+✓ TDS: 450 mg/L (Max: 1000 mg/L) - COMPLIANT
+
+Certifying Officer: Eng. Peter Kiprotich
+KEBS Registration: KE-CERT-001923
+Contact: peter.kiprotich@kebs.org
+
+This certificate authorizes the production and sale of drinking water 
+in accordance with Kenyan National Standards.

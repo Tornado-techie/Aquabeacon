@@ -1,0 +1,43 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/((?!api/|assets/|_next/|favicon\\.|.*\\.(css|js|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|json|xml|txt)).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(css|js|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "VITE_API_BASE_URL": "@vite_api_base_url",
+    "VITE_API_URL": "@vite_api_url", 
+    "VITE_APP_NAME": "@vite_app_name",
+    "VITE_ENABLE_AI_CHAT": "@vite_enable_ai_chat",
+    "VITE_ENVIRONMENT": "@vite_environment",
+    "VITE_SENTRY_DSN": "@vite_sentry_dsn",
+    "VITE_SENTRY_TRACES_SAMPLE_RATE": "@vite_sentry_traces_sample_rate",
+    "VITE_SENTRY_REPLAY_SAMPLE_RATE": "@vite_sentry_replay_sample_rate",
+    "VITE_ENABLE_SENTRY": "@vite_enable_sentry"
+  }
+}

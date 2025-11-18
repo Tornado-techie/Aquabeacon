@@ -1,0 +1,36 @@
+<svg width="300" height="80" xmlns="http://www.w3.org/2000/svg">
+  <!-- White/transparent background -->
+  <rect width="300" height="80" fill="white" rx="8"/>
+  
+  <!-- Main water droplet icon - Uniform Blue Design -->
+  <g transform="translate(20, 10)">
+    <!-- Main droplet - Blue (#3B82F6) -->
+    <path d="M20 5C20 5 5 15 5 25C5 35 12 40 20 40C28 40 35 35 35 25C35 15 20 5 20 5Z" 
+          fill="#3B82F6"/>
+    <!-- Light reflection for shine -->
+    <ellipse cx="16" cy="22" rx="2.5" ry="3" fill="#DBEAFE" opacity="0.7"/>
+    <!-- Small highlight -->
+    <circle cx="17" cy="19" r="1.5" fill="#FFFFFF" opacity="0.4"/>
+  </g>
+  
+  <!-- Main title "AquaBeacon" - Uniform Font Style -->
+  <text x="75" y="35" 
+        font-family="Georgia, 'Brush Script MT', 'Lucida Handwriting', cursive" 
+        font-size="24" 
+        font-weight="bold" 
+        font-style="italic"
+        fill="#1f2937"
+        letter-spacing="1px">
+    AquaBeacon
+  </text>
+  
+  <!-- Tagline - Consistent Styling -->
+  <text x="75" y="55" 
+        font-family="Arial, sans-serif" 
+        font-size="10" 
+        font-weight="600"
+        fill="#6b7280" 
+        letter-spacing="2.5px">
+    WATER BOTTLING INTELLIGENCE
+  </text>
+</svg>

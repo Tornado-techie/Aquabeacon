@@ -1,0 +1,15 @@
+WATER QUALITY COMPLAINT - PHOTO EVIDENCE
+==========================================
+
+Photo: complaint_001_brown_water.jpg (simulated)
+Timestamp: 2025-11-11 14:25:00
+GPS: -1.2921, 36.8219 (Westlands, Nairobi)
+
+Description: Photo shows brown, murky water collected from community borehole.
+Water appears contaminated with sediment and has unusual coloration.
+
+Photographer: Jane Doe
+Contact: jane.doe@email.com
+Complaint Reference: COMP-2025-001
+
+[This file represents a photo that would show contaminated water samples]

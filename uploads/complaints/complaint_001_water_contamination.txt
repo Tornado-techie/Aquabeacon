@@ -1,0 +1,23 @@
+COMPLAINT REPORT - Water Contamination
+========================================
+
+Complaint ID: COMP-2025-001
+Submitted By: Jane Doe (jane.doe@email.com)
+Phone: +254712345678
+Date Submitted: 2025-11-11 14:30:00
+Location: Westlands, Nairobi
+
+ISSUE DESCRIPTION:
+The water from our borehole has turned brown and has a foul smell. 
+Multiple residents in our area are experiencing stomach upsets after drinking the water.
+We suspect contamination from nearby construction activities.
+
+EVIDENCE:
+- Photos of discolored water samples
+- Medical reports from affected residents
+- GPS coordinates of water source
+
+URGENCY LEVEL: High
+AFFECTED POPULATION: ~50 households
+
+This file represents metadata for photos that would be uploaded with this complaint.

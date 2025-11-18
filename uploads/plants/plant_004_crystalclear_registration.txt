@@ -1,0 +1,39 @@
+WATER TREATMENT PLANT REGISTRATION
+====================================
+
+Plant ID: PLT-2025-004
+Registration Date: 2025-03-10
+
+FACILITY INFORMATION:
+Name: CrystalClear Water Processing Plant
+Owner: Grace Nduta
+Company: CrystalClear Ltd
+Email: grace.nduta@crystalclear.co.ke
+Phone: +254733556677
+
+PLANT SPECIFICATIONS:
+Location: Kiambu Road, Kiambu County
+GPS: -1.1743, 36.8356
+Capacity: 10,000 L/hour
+Technology: Reverse Osmosis + UV Sterilization
+Installation Date: 2025-02-15
+
+EQUIPMENT LIST:
+- RO Membrane System (4-stage)
+- UV Sterilizer (55W)
+- Storage Tank (50,000L capacity)
+- Automated bottling line
+- Quality testing laboratory
+
+STAFF:
+- Plant Manager: John Karanja
+- Quality Controller: Dr. Susan Wambui
+- Technician: Michael Otieno
+
+DOCUMENTATION:
+- Equipment certificates attached
+- Staff training records on file
+- Insurance policy valid until 2026-03-10
+
+Status: ACTIVE
+Next Inspection Due: 2025-09-10

@@ -1,0 +1,47 @@
+name: Security
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Monday
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Security Audit
+        run: |
+          echo "🔐 Running security audit..."
+          
+          cd server
+          npm audit --audit-level=moderate || echo "Backend audit completed with warnings"
+          
+          cd ../client  
+          npm audit --audit-level=moderate || echo "Frontend audit completed with warnings"
+        continue-on-error: true
+      
+      - name: Check for secrets
+        run: |
+          echo "🔍 Checking for potential secrets..."
+          
+          if grep -r -E "(password|secret|key|token)\s*[:=]\s*['\"][^'\"]{8,}['\"]" --include="*.js" --include="*.jsx" --include="*.ts" --include="*.tsx" . | grep -v node_modules | head -5; then
+            echo "⚠️ Potential hardcoded secrets found - please review"
+          else
+            echo "✅ No obvious secrets found"
+          fi
+        continue-on-error: true
+      
+      - name: Summary
+        run: echo "✅ Security scan completed"

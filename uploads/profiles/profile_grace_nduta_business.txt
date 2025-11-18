@@ -1,0 +1,40 @@
+USER PROFILE - BUSINESS OWNER
+==============================
+
+Profile ID: PRF-2025-007
+User: Grace Nduta
+Email: grace.nduta@crystalclear.co.ke
+Role: Business Owner
+
+PROFILE INFORMATION:
+Full Name: Grace Wanjiku Nduta
+Phone: +254733556677
+Company: CrystalClear Water Solutions Ltd
+Position: Managing Director
+
+BUSINESS DETAILS:
+Registration Number: PVT-202501234/KE
+Tax PIN: A002345678Z
+Business Permit: BL-2025-0089
+Establishment Date: 2024-12-15
+
+ADDRESS:
+Physical: Kiambu Road, Kiambu County
+Postal: P.O. Box 1234-00100, Nairobi
+GPS: -1.1743, 36.8356
+
+PROFILE PHOTO: grace_nduta_profile.jpg
+- Photo uploaded: 2025-03-10 10:30:00
+- File size: 245KB
+- Format: JPEG
+- Resolution: 400x400px
+
+COMPANY LOGO: crystalclear_logo.png
+- Logo uploaded: 2025-03-10 10:32:00
+- File size: 89KB
+- Format: PNG
+- Transparent background: Yes
+
+VERIFICATION STATUS: Verified ✓
+Verification Date: 2025-03-12
+Verified By: AquaBeacon Admin Team

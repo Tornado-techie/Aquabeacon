@@ -1,0 +1,50 @@
+LAB TEST RESULTS - WATER QUALITY ANALYSIS
+==========================================
+
+Lab Report ID: LAB-2025-11-089
+Client: AquaPure Water Solutions Ltd
+Sample ID: AP-2025-1101
+Test Date: 2025-11-05
+Report Date: 2025-11-06
+
+SAMPLE INFORMATION:
+Collection Date: 2025-11-05 10:30 AM
+Collection Point: Final product (1L bottles)
+Collected By: Michael Otieno (Plant Technician)
+Chain of Custody: Maintained
+
+LABORATORY: Kenya Industrial Research Institute (KIRDI)
+Analyst: Dr. James Muthoni
+Accreditation: ISO 17025:2017
+
+MICROBIOLOGICAL ANALYSIS:
+═══════════════════════════
+Total Coliform Count: <1 cfu/100ml (Limit: 0)
+E. coli Count: <1 cfu/100ml (Limit: 0)
+Enterococcus: <1 cfu/100ml (Limit: 0)
+Pseudomonas aeruginosa: <1 cfu/100ml (Limit: 0)
+
+PHYSICAL & CHEMICAL ANALYSIS:
+═══════════════════════════════
+pH: 7.3 (Acceptable: 6.5-8.5)
+Turbidity: 0.9 NTU (Limit: 5.0)
+Total Dissolved Solids: 445 mg/L (Limit: 1000)
+Electrical Conductivity: 590 μS/cm
+Colour: <5 TCU (Limit: 15)
+Odour: Acceptable
+Taste: Acceptable
+
+HEAVY METALS:
+═════════════
+Lead (Pb): <0.001 mg/L (Limit: 0.01)
+Cadmium (Cd): <0.001 mg/L (Limit: 0.003)
+Mercury (Hg): <0.0001 mg/L (Limit: 0.001)
+Arsenic (As): <0.001 mg/L (Limit: 0.01)
+
+OVERALL ASSESSMENT: SATISFACTORY
+The water sample meets all requirements of KS EAS 153:2020
+Drinking water specification standards.
+
+Signed: Dr. James Muthoni
+KIRDI Senior Analyst
+Date: 2025-11-06

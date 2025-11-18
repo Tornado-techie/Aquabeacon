@@ -1,0 +1,30 @@
+PLANT SETUP DOCUMENTATION
+==========================
+
+Plant: CrystalClear Water Processing Plant
+Setup Photos and Documentation
+Date: 2025-02-15 to 2025-03-05
+
+PHOTO INVENTORY:
+1. plant_exterior_view.jpg - Front view of facility building
+2. ro_system_installation.jpg - Reverse osmosis system setup
+3. uv_sterilizer_unit.jpg - UV sterilization equipment
+4. storage_tank_capacity.jpg - 50,000L storage tank
+5. bottling_line_setup.jpg - Automated bottling equipment
+6. quality_lab_equipment.jpg - Water testing laboratory
+7. staff_training_session.jpg - Team training documentation
+
+TECHNICAL SPECIFICATIONS:
+- Water intake source: Municipal supply + borehole backup
+- Treatment stages: Pre-filtration → RO → UV → Storage
+- Quality control: Hourly testing during production
+- Output packaging: 500ml, 1L, 5L bottles
+
+COMPLIANCE DOCUMENTATION:
+- Environmental Impact Assessment (EIA) - NEMA approved
+- Building permit - Kiambu County Council
+- Fire safety certificate - valid
+- Waste management plan - approved
+
+Contact: Grace Nduta (grace.nduta@crystalclear.co.ke)
+Plant Manager: John Karanja

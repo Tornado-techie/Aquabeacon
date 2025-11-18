@@ -1,0 +1,141 @@
+import express from 'express';
+import Article from '../models/Article.js';
+import { auth, optionalAuth } from '../middleware/auth.js';
+
+const router = express.Router();
+
+// Get all articles (with access control)
+router.get('/', optionalAuth, async (req, res) => {
+  try {
+    const { category, subcategory, page = 1, limit = 10 } = req.query;
+    
+    const filter = { status: 'published' };
+    if (category) filter.category = category;
+    if (subcategory) filter.subcategory = subcategory;
+
+    const articles = await Article.find(filter)
+      .select('title slug excerpt category subcategory accessLevel isPremium featuredImage readTime views publishedAt')
+      .sort({ publishedAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    // Add access information for each article
+    const articlesWithAccess = articles.map(article => {
+      const articleObj = article.toObject();
+      articleObj.hasAccess = article.canUserAccess(req.user);
+      articleObj.requiresPremium = article.isPremium;
+      return articleObj;
+    });
+
+    const total = await Article.countDocuments(filter);
+
+    res.json({
+      articles: articlesWithAccess,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+      total
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching articles', error: error.message });
+  }
+});
+
+// Get single article by slug
+router.get('/:slug', optionalAuth, async (req, res) => {
+  try {
+    const article = await Article.findOne({ 
+      slug: req.params.slug, 
+      status: 'published' 
+    });
+
+    if (!article) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+
+    // Check access
+    const hasAccess = article.canUserAccess(req.user);
+    
+    let content;
+    if (hasAccess) {
+      content = article.content;
+      // Increment view count
+      article.views += 1;
+      await article.save();
+    } else {
+      content = article.getPreview();
+    }
+
+    res.json({
+      ...article.toObject(),
+      content,
+      hasAccess,
+      requiresPremium: article.isPremium,
+      isPreview: !hasAccess && article.isPremium
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching article', error: error.message });
+  }
+});
+
+// Get article preview (always available)
+router.get('/:slug/preview', async (req, res) => {
+  try {
+    const article = await Article.findOne({ 
+      slug: req.params.slug, 
+      status: 'published' 
+    });
+
+    if (!article) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+
+    res.json({
+      title: article.title,
+      excerpt: article.excerpt,
+      content: article.getPreview(),
+      category: article.category,
+      subcategory: article.subcategory,
+      requiresPremium: article.isPremium,
+      accessLevel: article.accessLevel,
+      readTime: article.readTime,
+      publishedAt: article.publishedAt,
+      isPreview: true
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching preview', error: error.message });
+  }
+});
+
+// Admin routes (protected)
+router.post('/', auth, async (req, res) => {
+  try {
+    // Check if user is admin
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const article = new Article(req.body);
+    await article.save();
+    res.status(201).json(article);
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating article', error: error.message });
+  }
+});
+
+router.put('/:id', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const article = await Article.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!article) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+    res.json(article);
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating article', error: error.message });
+  }
+});
+
+export default router;

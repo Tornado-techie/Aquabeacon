@@ -1,0 +1,55 @@
+{
+  "name": "aquabeacon-server",
+  "version": "1.0.0",
+  "description": "AquaBeacon backend API",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "test": "NODE_ENV=test jest --runInBand",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "test:coverage": "NODE_ENV=test jest --coverage",
+    "seed": "node scripts/seed.js",
+    "backup": "node scripts/backup.js",
+    "quality:metrics": "node scripts/quality-metrics.cjs",
+    "quality:install": "npm run quality:install:server && npm run quality:install:client",
+    "quality:install:server": "cd server && npm install --save-dev eslint-plugin-complexity jscpd plato eslint-plugin-security audit-ci dependency-cruiser",
+    "quality:install:client": "cd client && npm install --save-dev eslint-plugin-complexity jscpd plato eslint-plugin-security audit-ci dependency-cruiser"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.438.0",
+    "@sendgrid/mail": "^8.1.6",
+    "axios": "^1.13.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "pdfkit": "^0.14.0",
+    "twilio": "^4.18.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^6.3.3"
+  },
+  "keywords": [
+    "water",
+    "purification",
+    "kenya",
+    "kebs",
+    "mern",
+    "aquabeacon"
+  ],
+  "author": "AquaBeacon Team",
+  "license": "MIT"
+}

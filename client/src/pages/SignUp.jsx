@@ -116,8 +116,16 @@ const SignUp = () => {
       // Handle specific backend errors
       const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
       
+      console.error('Registration error details:', {
+        status: error.response?.status,
+        message: errorMessage,
+        data: error.response?.data
+      });
+      
       // Handle specific error cases
-      if (errorMessage.includes('email')) {
+      if (error.response?.status === 403) {
+        toast.error(errorMessage); // Show the exact 403 message (e.g., "Invalid admin authorization code")
+      } else if (errorMessage.includes('email')) {
         toast.error('This email is already registered');
       } else if (errorMessage.includes('phone')) {
         toast.error('This phone number is already registered');

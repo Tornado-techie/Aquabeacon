@@ -4,14 +4,6 @@
   <img src="assets/aquabeacon-readme-logo.svg" alt="AquaBeacon Logo" width="400"/>
   
   **🌊 Empowering Kenya's Water Entrepreneurs with Intelligence 🌊**
-
-  <!-- CI/CD Status Badges -->
-  [![CI Pipeline](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/ci.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/ci.yml)
-  [![Deploy to Production](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/deploy.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/deploy.yml)
-  [![Code Quality](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/quality.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/quality.yml)
-  [![Testing](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/testing.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/testing.yml)
-  [![Monitoring](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/monitoring.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/monitoring.yml)
-  [![Security](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/security.yml/badge.svg)](https://github.com/Tornado-techie/Aquabeacon/actions/workflows/security.yml)
   
   ![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)
   ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -20,7 +12,7 @@
 
 ## 🚀 Live Demo
 
-**🌐 Frontend:** [https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app](https://aquabeacon-client-hrb49xvuu-tornado-techies-projects.vercel.app) 
+**🌐 Frontend:** [https://aquabeacon-client.vercel.app/](https://aquabeacon-client.vercel.app/) 
 
 
 **🔗 Backend:** [https://aquabeacon-backend.onrender.com](https://aquabeacon-backend.onrender.com)
@@ -36,23 +28,20 @@
 
 ## 🎥 Video Demonstration
 
-**🎬 Watch Demo:** [AquaBeacon Full-Stack Walkthrough - MERN + Socket.io](https://your-youtube-link-here)
+**🎬 Watch Demo:** [AquaBeacon Full-Stack Walkthrough - MERN Stack](https://your-youtube-link-here)
 
-> **Professional capstone demonstration showcasing full-stack MERN development with real-time features**
+> **Professional capstone demonstration showcasing full-stack MERN development**
 
 ### 📺 **What's Demonstrated (5-8 minutes)**
 
 #### **🔧 Technical Stack**
 - ✅ **Full-Stack MERN**: MongoDB, Express.js, React 19, Node.js
-- ✅ **Real-time Communication**: Socket.io live notifications and updates
 - ✅ **Modern Frontend**: Vite, Tailwind CSS, React Router v6
 - ✅ **Authentication**: JWT tokens with role-based access control
 - ✅ **Testing Framework**: Jest (backend) + Vitest (frontend)
-- ✅ **CI/CD Pipeline**: GitHub Actions automation
 
 #### **🚀 Key Features Showcase**
 - ✅ **Public Complaint System**: No-account-required reporting with photo upload
-- ✅ **Real-time Notifications**: Instant Socket.io alerts for inspectors/admins
 - ✅ **Role-based Dashboards**: Consumer, Owner, Inspector, and Admin interfaces
 - ✅ **Plant Management**: Multi-step registration wizard with permit tracking
 - ✅ **AI Assistant**: OpenAI-powered regulatory guidance and support
@@ -70,16 +59,15 @@
 |-----------|---------|----------------|
 | 0:00-0:30 | Introduction | Project overview and tech stack |
 | 0:30-1:30 | Public Features | Anonymous complaint submission |
-| 1:30-3:00 | **Real-time Demo** | **Socket.io live notifications** |
+| 1:30-3:00 | Dashboard Demo | Business and admin features |
 | 3:00-4:30 | Role-based Access | Authentication and authorization |
 | 4:30-5:30 | Business Logic | Plant management and AI integration |
 | 5:30-6:00 | Technical Summary | MERN stack and deployment readiness |
 
 ### 📱 **Demonstration Environment**
 - **Frontend**: React 19 with Vite development server
-- **Backend**: Node.js Express API with Socket.io
+- **Backend**: Node.js Express REST API
 - **Database**: MongoDB with sample data
-- **Real-time**: Live Socket.io connections and notifications
 - **Authentication**: JWT-based session management
 
 ---
@@ -103,7 +91,6 @@ AquaBeacon is a comprehensive full-stack MERN application designed for entrepren
 - **🔬 Lab Testing**: Sample tracking, result management, compliance monitoring
 - **📊 Dashboard & Analytics**: Role-specific dashboards, real-time metrics, production tracking
 - **🤖 AI Assistant**: OpenAI-powered contextual help for regulatory and operational questions
-- **🔔 Real-time Features**: Socket.io-powered live notifications, instant complaint updates, live status changes
 - **📱 Responsive Design**: Mobile-first UI with Tailwind CSS
 
 ### Security Features
@@ -120,17 +107,18 @@ AquaBeacon is a comprehensive full-stack MERN application designed for entrepren
 - **Twilio**: SMS alerts for permit expiry
 - **S3/MinIO**: Secure file storage for photos and documents
 - **OpenAI**: AI-powered assistant with prompt injection protection
-- **Socket.io**: Real-time bidirectional communication for live updates
 - **MongoDB**: Geospatial queries, full-text search
 
-## 🔔 Real-time Features (Socket.io)
+## 📱 Screenshots
 
-AquaBeacon implements comprehensive real-time communication using Socket.io for instant updates and notifications.
+### Desktop View
+![Landing Overview](screenshots/landingpage.png)
+*Main page showing key metrics and quick actions*
 
-### ⚡ **Live Notifications System**
-- **Instant Complaint Alerts**: Real-time notifications when new complaints are submitted
-- **Assignment Updates**: Live notifications when complaints are assigned to inspectors
-- **Status Change Alerts**: Immediate updates when complaint status changes
+![Signup overview](screenshots/signuppage.png)
+*Plant registration and management interface*
+
+![Login overview ](screenshots/signinpage.png)
 - **Role-based Notifications**: Targeted notifications based on user roles (Inspector, Admin, Owner)
 - **Unread Counter**: Visual badge showing number of unread notifications
 - **Toast Notifications**: Non-intrusive popup notifications for immediate feedback
@@ -402,9 +390,6 @@ aquabeacon/
 │   │   └── seed.js
 │   ├── server.js
 │   └── package.json
-├── infra/                # Infrastructure & DevOps
-│   ├── docker-compose.yml
-│   └── mongo-init.js
 ├── docs/                 # Documentation
 │   ├── API.md
 │   ├── DEPLOYMENT.md
@@ -475,8 +460,7 @@ aquabeacon/
 
 - **Node.js** >= 18.0.0
 - **npm** >= 9.0.0
-- **Docker** & **Docker Compose** (for local development)
-- **MongoDB** (or use Docker)
+- **MongoDB** (local or cloud Atlas)
 - API Keys (optional for full features):
   - SendGrid API Key
   - Twilio Account SID & Auth Token
@@ -503,34 +487,16 @@ cp server/.env.example server/.env
 cp client/.env.example client/.env
 ```
 
-Edit the `.env` files with your configuration. For local development with Docker, the default values should work.
+Edit the `.env` files with your configuration.
 
 🔒 **Important**: Replace all placeholder values with your actual credentials:
 - MongoDB Atlas connection string
 - JWT secrets (must be at least 32 characters)
 - API keys for external services
 
-### 3. Start with Docker Compose (Recommended)
+## 💻 Installation
 
-```bash
-# Start all services (MongoDB, MinIO, Backend, Frontend)
-docker-compose -f infra/docker-compose.yml up
-
-# Services will be available at:
-# - Frontend: http://localhost:3000
-# - Backend API: http://localhost:5000
-# - MongoDB: localhost:27017
-# - MinIO Console: http://localhost:9001
-```
-
-### 4. Create MinIO Bucket
-
-1. Open MinIO Console at http://localhost:9001
-2. Login with credentials: `minioadmin` / `minioadmin123`
-3. Create a bucket named `aquabeacon`
-4. Set the bucket policy to public or configure access as needed
-
-### 5. Seed Database (Optional)
+### 1. Seed Database (Optional)
 
 ```bash
 cd server
@@ -542,9 +508,7 @@ This will populate the database with:
 - Sample training modules
 - Test user accounts
 
-## 💻 Manual Setup (Without Docker)
-
-### Backend Setup
+### 2. Backend Setup
 
 ```bash
 cd server
@@ -552,7 +516,7 @@ npm install
 npm run dev
 ```
 
-### Frontend Setup
+### 3. Frontend Setup
 
 ```bash
 cd client
@@ -560,7 +524,7 @@ npm install
 npm start
 ```
 
-### MongoDB
+### 4. MongoDB
 
 Start MongoDB locally or use MongoDB Atlas:
 
@@ -1463,11 +1427,6 @@ aquabeacon/
 │   │   ├── tests/        # Unit & integration tests
 │   │   └── utils/        # Utility functions
 │   └── package.json
-├── infra/                # Infrastructure
-│   ├── docker-compose.yml
-│   ├── Dockerfile.server
-│   ├── Dockerfile.client
-│   └── nginx.conf
 ├── docs/                 # Documentation
 │   ├── API.md
 │   └── DEPLOYMENT.md
@@ -1555,21 +1514,7 @@ aquabeacon/
 - **Inspections Completed**: 800+
 - **User Satisfaction**: 4.8/5
 
-### Option 1: Docker Setup (Recommended)
-```bash
-# Clone and start with Docker
-git clone https://github.com/yourusername/aquabeacon.git
-cd aquabeacon
-docker-compose -f infra/docker-compose.yml up
-
-# Services available at:
-# Frontend: http://localhost:3000
-# Backend: http://localhost:5000
-# MongoDB: localhost:27017
-# MinIO: http://localhost:9001
-```
-
-### Option 2: Manual Setup
+### Quick Setup
 ```bash
 # 1. Clone repository
 git clone https://github.com/yourusername/aquabeacon.git
@@ -1587,7 +1532,7 @@ npm install
 cp .env.example .env
 # Edit .env with your configuration
 
-# 4. Start MongoDB (if not using Docker)
+# 4. Start MongoDB (locally or use MongoDB Atlas)
 mongod --dbpath /path/to/data
 
 # 5. Start backend server
@@ -1599,7 +1544,7 @@ cd ../client
 npm run dev
 ```
 
-### Option 3: Development Setup
+### Development Setup
 ```bash
 # Quick development setup with sample data
 npm run setup:dev

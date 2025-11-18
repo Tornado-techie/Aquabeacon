@@ -119,135 +119,6 @@ AquaBeacon is a comprehensive full-stack MERN application designed for entrepren
 *Plant registration and management interface*
 
 ![Login overview ](screenshots/signinpage.png)
-- **Role-based Notifications**: Targeted notifications based on user roles (Inspector, Admin, Owner)
-- **Unread Counter**: Visual badge showing number of unread notifications
-- **Toast Notifications**: Non-intrusive popup notifications for immediate feedback
-
-### 🔗 **Connection Management**
-- **Auto-authentication**: Seamless JWT-based socket authentication
-- **Auto-reconnection**: Automatic reconnection with exponential backoff
-- **Connection Status**: Visual indicator showing live connection status
-- **Room Management**: User-specific, role-based, and complaint-specific rooms
-- **Graceful Fallback**: Continues working even if real-time connection fails
-
-### 🚀 **Real-time Events**
-
-#### **Complaint Management**
-```javascript
-// New complaint submitted
-socket.emit('complaint_created', {
-  complaintId: 'COMP-2024-001',
-  category: 'water_quality',
-  location: 'Nairobi',
-  isUrgent: true
-});
-
-// Complaint assigned to inspector
-socket.emit('complaint_assigned', {
-  complaintId: 'COMP-2024-001',
-  inspector: { name: 'John Doe', id: '...' },
-  assignedBy: { name: 'Admin', role: 'admin' }
-});
-
-// Status updated
-socket.emit('complaint_status_updated', {
-  complaintId: 'COMP-2024-001',
-  oldStatus: 'investigating',
-  newStatus: 'resolved',
-  updatedBy: { name: 'Inspector Jane' }
-});
-```
-
-#### **System Announcements**
-```javascript
-// Broadcast system-wide announcements
-socket.emit('announcement', {
-  title: 'System Maintenance',
-  message: 'Scheduled maintenance tonight 2-4 AM',
-  priority: 'high'
-});
-```
-
-### 🎯 **User Experience Benefits**
-- **No Page Refresh Needed**: All updates appear instantly
-- **Immediate Feedback**: Users see actions reflected immediately
-- **Better Collaboration**: Inspectors and admins stay in sync
-- **Reduced Response Time**: Faster complaint resolution through instant notifications
-- **Professional Feel**: Enterprise-grade real-time experience
-
-### 🛠️ **Technical Implementation**
-
-#### **Backend (Node.js + Socket.io)**
-```javascript
-// Socket.io server setup with authentication
-const io = new Server(server, {
-  cors: { origin: process.env.FRONTEND_URL },
-  path: '/socket.io/',
-  transports: ['websocket', 'polling']
-});
-
-// JWT-based authentication
-io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  // Verify JWT and attach user info
-});
-
-// Role-based room management
-socket.join(`role:${user.role}`);
-socket.join(`user:${user.id}`);
-```
-
-#### **Frontend (React + Socket.io Client)**
-```javascript
-// React context for real-time features
-const { notifications, joinComplaint, sendMessage } = useSocket();
-
-// Component integration
-<NotificationDropdown 
-  notifications={notifications}
-  unreadCount={unreadCount}
-/>
-
-<ConnectionStatusIndicator 
-  isConnected={isConnected}
-/>
-```
-
-### 📊 **Real-time Metrics**
-- **Connection Uptime**: 99.9% availability with auto-reconnection
-- **Notification Delivery**: < 100ms average delivery time
-- **Concurrent Users**: Supports 1000+ simultaneous connections
-- **Message Throughput**: 10,000+ messages per second
-- **Memory Efficient**: Optimized room management and cleanup
-
-### 🔧 **Configuration**
-
-#### **Environment Variables**
-```bash
-# Backend (.env)
-SOCKET_IO_CORS_ORIGIN=https://your-frontend.com
-SOCKET_IO_PATH=/socket.io/
-
-# Frontend (.env)
-VITE_API_URL=https://your-backend.com
-VITE_SOCKET_URL=https://your-backend.com
-```
-
-#### **Development Setup**
-```bash
-# Backend
-npm install socket.io
-
-# Frontend  
-npm install socket.io-client
-```
-
-### 🎨 **UI Components**
-- **Notification Bell**: Click to view all notifications with unread count badge
-- **Real-time Badge**: Shows unread count with auto-update
-- **Connection Status**: Green dot = connected, Red = disconnected  
-- **Toast Notifications**: Auto-dismissing popup alerts
-- **Live Updates**: Data refreshes automatically without user action
 
 ### 🔄 **Real-time Workflow Example**
 
@@ -1048,12 +919,6 @@ npm run test:coverage
 npm test && npm run lint
 ```
 
-#### **CI/CD Integration**
-- Automated testing on pull requests
-- Coverage reporting to Codecov
-- Deployment blocked on test failures
-- Performance regression testing
-
 ### 🔍 **Test Data Management**
 
 #### **Test Database**
@@ -1269,41 +1134,6 @@ heroku logs --tail
    mongodb+srv://aquabeacon-admin:<password>@aquabeacon.xxxxx.mongodb.net/aquabeacon
    ```
 
-### CI/CD Pipeline (GitHub Actions) 🚀
-
-Our comprehensive CI/CD pipeline includes multiple workflows for different purposes:
-
-#### 🔄 **Continuous Integration** (`.github/workflows/ci.yml`)
-- **Triggers**: Push to main/develop, Pull Requests
-- **Node.js Versions**: 18.x, 20.x (Matrix testing)
-- **Services**: MongoDB 6.0 with authentication
-- **Backend Testing**: Unit tests, integration tests, coverage reports
-- **Frontend Testing**: Component tests, build validation, coverage
-- **Security**: Dependency audits, vulnerability scanning
-- **Code Quality**: Linting, sensitive data detection
-
-#### 🚀 **Deployment Pipeline** (`.github/workflows/deploy.yml`)
-- **Triggers**: Push to main branch, manual dispatch
-- **Pre-deployment**: Package validation, environment checks
-- **Backend Deploy**: Automatic deployment to Render
-- **Frontend Deploy**: Automatic deployment to Vercel
-- **Post-deployment**: Health checks, API connectivity tests
-
-#### 🧪 **Testing & QA** (`.github/workflows/test.yml`)
-- **Comprehensive Testing**: Unit, integration, performance tests
-- **Coverage Analysis**: Detailed coverage reports via Codecov
-- **Performance**: Lighthouse CI, bundle size analysis
-- **Matrix Testing**: Multiple Node.js versions
-
-#### 🔒 **Code Quality & Security** (`.github/workflows/quality.yml`)
-- **Static Analysis**: CodeQL security scanning
-- **Dependency Security**: Weekly vulnerability scans
-- **License Compliance**: Automated license checking
-- **Code Style**: ESLint and Prettier validation
-
-#### 📊 **Workflow Status**
-All workflows provide detailed reporting and status badges. Failed builds prevent deployment and send notifications.
-
 ### Domain Configuration
 
 **Custom Domains:**
@@ -1354,51 +1184,6 @@ mongodump --uri="mongodb+srv://..." --out=./backup-$(date +%Y%m%d)
 aws s3 sync s3://aquabeacon-uploads s3://aquabeacon-backups/$(date +%Y%m%d)
 ```
 
-#### 🔑 **Required GitHub Secrets**
-
-Configure these secrets in your GitHub repository settings:
-
-**Deployment Secrets:**
-```bash
-# Vercel Deployment
-VERCEL_TOKEN=your_vercel_token_here
-VERCEL_ORG_ID=team_xxxxxxxxxx
-VERCEL_PROJECT_ID=prj_xxxxxxxxxx
-
-# Render Deployment (Optional - auto-deploys on git push)
-RENDER_DEPLOY_HOOK=https://api.render.com/deploy/srv-xxxxxxxxxx?key=xxxxxxx
-
-# Code Coverage (Optional)
-CODECOV_TOKEN=your_codecov_token_here
-
-# Code Quality (Optional)
-SONAR_TOKEN=your_sonarcloud_token_here
-
-# Testing (Optional)
-CYPRESS_RECORD_KEY=your_cypress_record_key_here
-```
-
-**Environment Variables for CI:**
-The CI pipeline uses test-specific environment variables that are automatically configured. No additional secrets needed for basic testing.
-
-#### 🏃‍♂️ **Running CI/CD Locally**
-
-Test your changes locally before pushing:
-
-```bash
-# Install act (GitHub Actions local runner)
-npm install -g @nektos/act
-
-# Run CI pipeline locally
-act push
-
-# Run specific workflow
-act -W .github/workflows/ci.yml
-
-# Run with secrets
-act --secret-file .secrets
-```
-
 See detailed deployment guide in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
 ## 📁 Project Structure
@@ -1442,7 +1227,6 @@ aquabeacon/
 - **Tailwind CSS** - Utility-first CSS framework
 - **React Hook Form** - Form handling and validation
 - **React Hot Toast** - Toast notifications
-- **Socket.io Client** - Real-time communication
 - **Axios** - HTTP client for API calls
 - **React Icons** - Icon library
 
@@ -1453,7 +1237,6 @@ aquabeacon/
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
 - **Bcrypt** - Password hashing
-- **Socket.io** - Real-time bidirectional communication
 - **Multer** - File upload handling
 - **Express Validator** - Input validation
 - **Express Rate Limit** - Rate limiting middleware
@@ -1472,8 +1255,6 @@ aquabeacon/
 - **Prettier** - Code formatting
 - **Jest** - Testing framework
 - **Supertest** - API testing
-- **Docker** - Containerization
-- **GitHub Actions** - CI/CD pipeline
 
 ## � Recent Updates (October 2025)
 
@@ -1552,7 +1333,6 @@ npm run setup:dev
 # This script will:
 # - Install all dependencies
 # - Set up environment files
-# - Start MongoDB with Docker
 # - Seed database with sample data
 # - Start both servers
 ```
@@ -1592,13 +1372,13 @@ For support, email support@aquabeacon.co.ke or open an issue on GitHub.
 
 ## 🛣️ Roadmap
 
-- [x] **Real-time notifications and live updates** ✅ *Completed - Socket.io implementation*
 - [ ] Mobile app (React Native)
 - [ ] Advanced analytics dashboard with charts and exports
 - [ ] Integration with KEBS API (when available)
 - [ ] Multi-language support (Swahili, English)
 - [ ] Payment integration for permit fees (Stripe/M-Pesa)
-- [ ] Advanced real-time chat and messaging system
+- [ ] Real-time notifications and live updates
+- [ ] Advanced chat and messaging system
 - [ ] Blockchain-based certification tracking
 
 ---

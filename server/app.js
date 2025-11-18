@@ -11,7 +11,7 @@ const authMiddleware = require('./middleware/auth');
 const validationMiddleware = require('./middleware/validation');
 
 // Import routes
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./src/routes/auth.routes');
 const userRoutes = require('./routes/users');
 const plantRoutes = require('./routes/plants');
 const complaintRoutes = require('./routes/complaints');

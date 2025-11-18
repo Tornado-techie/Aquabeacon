@@ -6,12 +6,21 @@ const connectDB = async () => {
     if (!process.env.MONGO_URI) {
       throw new Error('MONGO_URI environment variable is not set');
     }
+    
+    logger.info('Attempting to connect to MongoDB...');
+    const startTime = Date.now();
+    
     const conn = await mongoose.connect(process.env.MONGO_URI, {
-      // useNewUrlParser: true, // Deprecated in Mongoose 6.0.0
-      // useUnifiedTopology: true, // Deprecated in Mongoose 6.0.0
+      serverSelectionTimeoutMS: 15000, // Timeout after 15s instead of 30s
+      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+      maxPoolSize: 10, // Maintain up to 10 socket connections
+      minPoolSize: 2, // Maintain at least 2 socket connections
+      maxIdleTimeMS: 30000, // Close idle connections after 30s
+      retryWrites: true,
+      retryReads: true,
     });
 
-    logger.info(`MongoDB Connected: ${conn.connection.host}`);
+    logger.info(`MongoDB Connected: ${conn.connection.host} (took ${Date.now() - startTime}ms)`);
 
     // Handle connection events
     mongoose.connection.on('error', (err) => {

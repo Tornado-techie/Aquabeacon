@@ -32,7 +32,13 @@ const monitoringRoutes = require('./src/routes/monitoring.routes');
 const paymentRoutes = require('./routes/payments');
 
 const app = express();
+
+// Increase server timeout to prevent premature disconnections
 const server = http.createServer(app);
+server.timeout = 120000; // 120 seconds (2 minutes)
+server.keepAliveTimeout = 65000; // 65 seconds
+server.headersTimeout = 66000; // 66 seconds
+
 const PORT = process.env.PORT || 5000;
 
 connectDB();

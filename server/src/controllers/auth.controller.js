@@ -29,6 +29,7 @@ const generateRefreshToken = (userId) => {
  * @access  Public
  */
 exports.register = async (req, res) => {
+  const startTime = Date.now();
   try {
     const { firstName, lastName, email, password, phone, userType, role, adminCode } = req.body;
 
@@ -97,7 +98,10 @@ exports.register = async (req, res) => {
     }
 
     // Check if user already exists
+    const checkStart = Date.now();
     const existingUser = await User.findOne({ email: email.toLowerCase() });
+    logger.info(`Email check took ${Date.now() - checkStart}ms`);
+    
     if (existingUser) {
       logger.warn(`Registration failed: Email ${email} already exists`);
       return res.status(400).json({
@@ -107,6 +111,7 @@ exports.register = async (req, res) => {
     }
 
     // Create user
+    const createStart = Date.now();
     const user = await User.create({
       firstName,
       lastName,
@@ -115,12 +120,13 @@ exports.register = async (req, res) => {
       phone,
       role: userRole
     });
-
+    logger.info(`User creation took ${Date.now() - createStart}ms`);
     logger.info(`User registered successfully: ${user._id}`);
 
     // Generate tokens
     const token = generateToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
+    logger.info(`Total registration time: ${Date.now() - startTime}ms`);
 
     res.status(201).json({
       success: true,
